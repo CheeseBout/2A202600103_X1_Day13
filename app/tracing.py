@@ -23,25 +23,21 @@ except Exception:  # pragma: no cover
 else:
     class _LangfuseContext:
         def update_current_trace(self, **kwargs: Any) -> None:
-            get_client().update_current_trace(**kwargs)
+            client = get_client()
+            if hasattr(client, "update_current_trace"):
+                client.update_current_trace(**kwargs)
 
         def update_current_observation(self, **kwargs: Any) -> None:
             client = get_client()
             # Langfuse SDKs differ: some expose observation, others generation/span updates.
             if hasattr(client, "update_current_observation"):
-                client.update_current_observation(
-                    metadata=kwargs.get("metadata"),
-                    usage_details=kwargs.get("usage_details"),
-                )
+                client.update_current_observation(**kwargs)
                 return
             if hasattr(client, "update_current_generation"):
-                client.update_current_generation(
-                    metadata=kwargs.get("metadata"),
-                    usage_details=kwargs.get("usage_details"),
-                )
+                client.update_current_generation(**kwargs)
                 return
             if hasattr(client, "update_current_span"):
-                client.update_current_span(metadata=kwargs.get("metadata"))
+                client.update_current_span(**kwargs)
 
     langfuse_context = _LangfuseContext()
 

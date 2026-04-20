@@ -87,6 +87,7 @@ async def chat(request: Request, body: ChatRequest) -> ChatResponse:
             tokens_in=result.tokens_in,
             tokens_out=result.tokens_out,
             cost_usd=result.cost_usd,
+            spans=result.spans,
             payload={"answer_preview": summarize_text(result.answer)},
         )
         return ChatResponse(
@@ -100,6 +101,9 @@ async def chat(request: Request, body: ChatRequest) -> ChatResponse:
         )
     except Exception as exc:  # pragma: no cover
         error_type = type(exc).__name__
+        if error_type == "RuntimeError" and "Vector store timeout" in str(exc):
+            error_type = "tool_fail"
+            
         record_error(error_type)
         log.error(
             "request_failed",
