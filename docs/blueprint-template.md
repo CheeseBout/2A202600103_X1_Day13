@@ -72,25 +72,13 @@ trace waterfall cho thấy span retrieve/RAG chiếm phần lớn thời gian
 
 ## 5. Individual Contributions & Evidence
 
-### [MEMBER_A_NAME]
-- [TASKS_COMPLETED]: 
-- [EVIDENCE_LINK]: (Link to specific commit or PR)
+### Lê Nguyễn Chí Bảo
+- [TASKS_COMPLETED]: Logging & PII, Tracing & Enrichment, SLO & Alerts, Report
+- [EVIDENCE_LINK]: 9d7f644908a4e90af98a3640653852334e6a699d, f1a4b85dff52d9b7cb12b148921ef05ef0895b72
 
-### [MEMBER_B_NAME]
-- [TASKS_COMPLETED]: 
-- [EVIDENCE_LINK]: 
-
-### [MEMBER_C_NAME]
-- [TASKS_COMPLETED]: 
-- [EVIDENCE_LINK]: 
-
-### [MEMBER_D_NAME]
-- [TASKS_COMPLETED]: 
-- [EVIDENCE_LINK]: 
-
-### [MEMBER_E_NAME]
-- [TASKS_COMPLETED]: 
-- [EVIDENCE_LINK]: 
+### Nguyễn Phan Tuấn Anh
+- [TASKS_COMPLETED]: Logging & PII, Load Test & Dashboard, Demo
+- [EVIDENCE_LINK]: 5a0b830782f023dadbffe615b012486c1202db0b, 574d142f00ed42f1c2c11805657c0b5087c5abf7, 75a088ff50a1adae7222bff7cccb5bdb64ef0828
 
 ---
 
