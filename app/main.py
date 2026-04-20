@@ -17,13 +17,23 @@ from .metrics import record_error, snapshot
 from .middleware import CorrelationIdMiddleware
 from .pii import hash_user_id, summarize_text
 from .schemas import ChatRequest, ChatResponse
-from .tracing import tracing_enabled
+from .tracing import observe, tracing_enabled
 
 configure_logging()
 log = get_logger()
 app = FastAPI(title="Day 13 Observability Lab")
 app.add_middleware(CorrelationIdMiddleware)
 agent = LabAgent()
+
+
+@observe(name="http_chat", as_type="span")
+def traced_agent_run(user_id: str, feature: str, session_id: str, message: str):
+    return agent.run(
+        user_id=user_id,
+        feature=feature,
+        session_id=session_id,
+        message=message,
+    )
 
 @app.on_event("startup")
 async def startup() -> None:
@@ -64,7 +74,7 @@ async def chat(request: Request, body: ChatRequest) -> ChatResponse:
         payload={"message_preview": summarize_text(body.message)},
     )
     try:
-        result = agent.run(
+        result = traced_agent_run(
             user_id=body.user_id,
             feature=body.feature,
             session_id=body.session_id,
