@@ -12,5 +12,5 @@ slis:
     objective: 2.5
     target: 100.0
   quality_score_avg:
-    objective: 0.75
+    objective: 0.8
     target: 95.0

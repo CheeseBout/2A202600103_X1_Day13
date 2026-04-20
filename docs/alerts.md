@@ -38,3 +38,16 @@
   - shorten prompts
   - route easy requests to cheaper model
   - apply prompt cache
+
+## 4. Quality drop
+- Severity: P2
+- Trigger: `quality_avg < 0.8 for 15m`
+- Impact: answer quality degrades and user trust decreases
+- First checks:
+  1. Compare quality by feature and recent deploy window
+  2. Check retrieval relevance and prompt size drift
+  3. Inspect traces with low-quality outputs and high error spans
+- Mitigation:
+  - tighten retrieval filters and top-k
+  - adjust prompt template and guardrails
+  - route complex queries to stronger model tier

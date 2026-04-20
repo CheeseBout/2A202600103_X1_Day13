@@ -17,3 +17,9 @@ alerts:
     type: symptom-based
     owner: finops-owner
     runbook: docs/alerts.md#3-cost-budget-spike
+  - name: quality_drop
+    severity: P2
+    condition: quality_avg < 0.8 for 15m
+    type: symptom-based
+    owner: product-owner
+    runbook: docs/alerts.md#4-quality-drop
