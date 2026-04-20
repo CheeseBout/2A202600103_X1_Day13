@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+import langfuse
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 from structlog.contextvars import bind_contextvars
@@ -32,6 +33,7 @@ async def startup() -> None:
         env=os.getenv("APP_ENV", "dev"),
         payload={"tracing_enabled": tracing_enabled()},
     )
+    
 
 
 @app.get("/health")
@@ -116,3 +118,12 @@ async def disable_incident(name: str) -> JSONResponse:
         return JSONResponse({"ok": True, "incidents": status()})
     except KeyError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
+
+@app.on_event("shutdown")
+async def shutdown() -> None:
+    if tracing_enabled():
+        try:
+            langfuse.get_client().flush()
+            log.info("langfuse_flushed", service="api")
+        except Exception as exc:
+            log.warning("langfuse_flush_failed", service="api", payload={"detail": str(exc)})
