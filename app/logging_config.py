@@ -44,6 +44,7 @@ def configure_logging() -> None:
             structlog.processors.TimeStamper(fmt="iso", utc=True, key="ts"),
             # TODO: Register your PII scrubbing processor here
             # scrub_event,
+            scrub_event,
             structlog.processors.StackInfoRenderer(),
             structlog.processors.format_exc_info,
             JsonlFileProcessor(),
